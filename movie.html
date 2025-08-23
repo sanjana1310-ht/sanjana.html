@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Movie Ticket Booking App</title>
+  <style>
+    body {
+      background-color: antiquewhite;
+      color: black;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    #container {
+      background-color: lightgoldenrodyellow;
+      text-align: left;
+      display: inline-block;
+      width: 950px;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .head-1 {
+      text-align: left;
+      padding-left: 20px;
+      color: darkgray;
+      font-size: 18px;
+    }
+    .poster {
+      margin-right: 10px;
+      width: 250px;
+      height: 350px;
+      border: 5px solid black;
+      transition: transform 0.3s ease;
+    }
+    .poster:hover {
+      transform: scale(1.05);
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      margin-right: 10px;
+      width: 250px;
+      height: 40px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="head-1">
+    <h2>bookmy<b>show</b></h2>
+  </div>
+
+  <h1>🎬 Book Your Movie Ticket 🎫</h1>
+
+  <div id="container">
+    <h2>Movies Available:</h2>
+    
+    <!-- Movie Posters -->
+    <img src="inception.jpg" alt="Inception" class="poster">
+    <img src="bahu.jpg" alt="Bahubali" class="poster">
+    <img src="avenger.jpg" alt="Avengers" class="poster">
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button onclick="bookMovie('Inception')">Inception</button>
+      <button onclick="bookMovie('Bahubali')">Bahubali</button>
+      <button onclick="bookMovie('Avengers')">Avengers</button>
+    </div>
+  </div>
+
+  <!-- Output message -->
+  <div id="output"></div>
+
+  <script>
+    // ✅ IIFE – Run when page loads
+    (function () {
+      document.getElementById("output").innerHTML = "🎉 Booking App Ready!";
+    })();
+
+    // ✅ Function to check if the movie is available
+    function isMovieAvailable(movie) {
+      const availableMovies = ['Inception', 'Bahubali', 'Avengers'];
+      return availableMovies.includes(movie);
+    }
+
+    // ✅ Function expression to calculate price + GST
+    const calculatePriceWithGST = function (price) {
+      const gstRate = 0.18;
+      return price + price * gstRate;
+    }
+
+    // ✅ Arrow function to show booking confirmation
+    const showConfirmation = (movie, priceWithGST) => {
+      document.getElementById("output").innerHTML =
+        `🎟️ Booking confirmed for <strong>${movie}</strong>!<br>💰 Price with GST: ₹${priceWithGST.toFixed(2)}`;
+    }
+
+    // ✅ Callback function for delay message
+    function showPreparingMessage(callback) {
+      setTimeout(() => {
+        callback();
+      }, 2000);
+    }
+
+    // ✅ Main function to handle movie booking
+    function bookMovie(movie) {
+      if (!isMovieAvailable(movie)) {
+        document.getElementById("output").innerHTML = "❌ Movie not available.";
+        return;
+      }
+
+      const basePrice = 200;
+      const finalPrice = calculatePriceWithGST(basePrice);
+
+      showConfirmation(movie, finalPrice);
+
+      showPreparingMessage(() => {
+        document.getElementById("output").innerHTML += "<br>🍿 Your ticket is being prepared...";
+      });
+    }
+  </script>
+
+</body>
+</html>
